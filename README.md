@@ -1,5 +1,5 @@
 # CarApp - my Angylar project version 14.2.3.
-## deploy: https://smska2021.github.io/carSite/
+## deploy: https://smska2021.github.io/cars-hw/
 
 ## Development server
 1) npm install
