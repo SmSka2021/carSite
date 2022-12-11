@@ -1,7 +1,7 @@
 export interface CarData {
   name: string;
   image: string;
-  engines: string;
+  engine: number;
   gear: string;
-  belt: number;
+  places: number;
 }

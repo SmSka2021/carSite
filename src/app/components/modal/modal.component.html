@@ -2,7 +2,8 @@
   <div class="modal">
     <div class="modal_container">
       <button type="button" class="modal__btn-close" (click)="closeModal()" >X</button>
-      <h6 class="modal__text">"Спасибо за заявку,<br/> мы свяжемся с Вами в ближайшее время"</h6>
+      <sa-spinner-diamond *ngIf="isShowSpinner$ | async"></sa-spinner-diamond>
+      <h6 class="modal__text" >{{message | async}}</h6>
     </div>
   </div>
 </div>

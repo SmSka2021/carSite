@@ -1,22 +1,31 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit, OnDestroy} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {CarService} from "./services/car.service";
 import {CarData} from "./models/model";
 import {Observable, Subscription} from "rxjs";
+import {HttpService} from "./services/http.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
+
   constructor(private fb: FormBuilder,
-              private carService: CarService) {}
+              private carService: CarService,
+              private httpService: HttpService) {}
   public carsData: CarData[] = this.carService.carsData;
   public openModal: Observable<boolean> = this.carService.getOpenModal();
+  ngOnInit() {
+    this.subscriptions.push(this.httpService.getData().subscribe((data: any) => {
+      this.carsData = [...data];
+    }))
+  }
   public priceForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-    tel: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+    phone: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     car: ['', [Validators.required,  Validators.minLength(3), Validators.maxLength(40)]],
   })
 
@@ -39,16 +48,32 @@ export class AppComponent {
   }
   public onSubmit(): void {
     if (this.priceForm.valid) {
+      this.carService.setIsShowSpinner(true);
+      this.httpService.sendRequest(this.priceForm.value).subscribe({
+          next: (response: any) => {
+            this.carService.setMessage(response.message);
+            this.carService.setIsShowSpinner(false)
+            this.priceForm.reset();
+          },
+          error: (response: any) => {
+            this.carService.setMessage(response.error.message);
+          }
+        }
+      )
       this.carService.setOpenModal(true);
       this.carService.isScroll('hidden');
-      this.priceForm.reset();
+
     } else {
       return;
     }
   }
   get name() { return this.priceForm.get('name'); }
 
-  get tel() { return this.priceForm.get('tel'); }
+  get phone() { return this.priceForm.get('phone'); }
 
   get car() { return this.priceForm.get('car'); }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
+  }
 }
