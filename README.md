@@ -1,4 +1,4 @@
-# CarApp - my Angylar project version 14.2.3.
+# CarApp - my Angylar project version 14.2.3. // This project has backend request 
 ## deploy: https://smska2021.github.io/cars-hw/
 
 ## Development server
