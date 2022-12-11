@@ -19,7 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public carsData: CarData[] = this.carService.carsData;
   public openModal: Observable<boolean> = this.carService.getOpenModal();
   ngOnInit() {
-    this.subscriptions.push(this.httpService.getData().subscribe((data: any) => {
+    this.subscriptions.push(this.httpService.getData(this.category).subscribe((data: any) => {
       this.carsData = [...data];
     }))
   }
@@ -72,6 +72,11 @@ export class AppComponent implements OnInit, OnDestroy {
   get phone() { return this.priceForm.get('phone'); }
 
   get car() { return this.priceForm.get('car'); }
+  public category: string = 'sport';
+  public toggleCategory(category: string) {
+    this.category = category;
+    this.ngOnInit();
+  }
 
   ngOnDestroy() {
     this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());

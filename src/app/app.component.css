@@ -108,7 +108,7 @@
 }
 .card__item:hover {
   box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
-  transform: scale(1.1);
+  transform: scale(1.02);
 }
 .card__item:hover .card__title {
   color: blue;
@@ -221,4 +221,35 @@
 .price__btn:disabled{
   background-color: #575757;
   cursor: not-allowed;
+}
+.car-toggle {
+  display: flex;
+  width: 198px;
+  border: 1px solid gray;
+  margin: 0 0 40px;
+}
+
+.car-toggle div {
+  padding: 20px;
+  background: white;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: black;
+  transition: background-color .5s;
+  cursor: pointer;
+}
+
+.car-toggle div.active {
+  background: #030305;
+  color: #FFFFFF;
+}
+
+.car .container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

@@ -29,6 +29,10 @@
   <section class="car" #cars id="cars">
     <div class="container">
       <h2 class="sub__title">Наш автопарк</h2>
+      <div class="car-toggle">
+        <div [ngClass]="{active: category === 'sport'}" (click)="toggleCategory('sport')">Sport</div>
+        <div [ngClass]="{active: category === 'luxury'}" (click)="toggleCategory('luxury')">Luxury</div>
+      </div>
       <div class="cards">
         <div class="card__item" *ngFor="let car of carsData">
           <img src="{{car.image}}" alt="car" class="card__img">
